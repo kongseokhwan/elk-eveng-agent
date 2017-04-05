@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/kulcloud-libnetwork-prism.iml" filepath="$PROJECT_DIR$/.idea/kulcloud-libnetwork-prism.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/kulcloud-prism-iptable-agent.iml" filepath="$PROJECT_DIR$/.idea/kulcloud-prism-iptable-agent.iml" />
     </modules>
   </component>
 </project>
