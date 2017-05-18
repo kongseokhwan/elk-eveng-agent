@@ -10,23 +10,8 @@ import schema.ELK_EVENT_CONSTANTS as ELK_EVENT_CONSTANTS
 LOG = logging.getLogger(__name__)
 
 class sns_agent():
-    def __init__(self, ELK_ADDRESS, INDEX,
-                 TYPE):
-        self.elk_addr = ELK_ADDRESS
-        self.index = INDEX
-        self.type = TYPE
-
-        self.es_client = elasticsearch.Elasticsearch(
-            self.elk_addr)
-
-        self.elk_event_mp = elk_event_mapper()
-
-
-    def action_send_elk_log(self, event, msg):
-        data = self.elk_event_mp.make_elk_msg(event, msg)
-        self.es_client.create(index=self.index,
-                              doc_type=self.type,
-                              body=data)
+    def __init__(self):
+        # TODO : Urgent! Integrate with slack version
 
 def main(argv):
     # TODO : Need to know how to make sns application
