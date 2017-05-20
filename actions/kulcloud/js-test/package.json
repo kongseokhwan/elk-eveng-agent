@@ -1,0 +1,13 @@
+{
+  "name": "my-action",
+  "main": "index.js",
+  "dependencies" : {
+    "left-pad" : "1.1.3",
+    "slack-client" : "latest",
+    "request" : "latest",
+    "cheerio" : "latest",
+    "string-similarity" : "latest",
+    "ps-grab" : "latest",
+    "async" : "latest"
+  }
+}
