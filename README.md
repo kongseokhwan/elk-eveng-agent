@@ -192,7 +192,7 @@ RESULT CHECK
 
 	wsk action create slack --kind python:2 --main slack slack.zip	
 
-	wsk action invoke slack --blocking --result --param token "xoxb-172489925216-RKpT9uxHd3zaplQkIwdkn4YU" --param channel "#alert" --param message "ddos attack detection"
+	wsk action invoke slack --blocking --result --param token "xoxb-172489925216-UdxsbjxZzade8dePFQIdbTLB" --param channel "#alert" --param message "ddos attack detection"
 
 
 #### FAQs
