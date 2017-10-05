@@ -119,9 +119,20 @@ Fire the trigger event
 
 	./bin/wsk -i property get --auth
 
+	output : 23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP
+
+	23bc46b1-71f6-4ed5-8c54-816aa4f8c502 ==> USERNAME
+
+	123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP ==> PASSWORD
+
+	export USERNAME=23bc46b1-71f6-4ed5-8c54-816aa4f8c502
+
+	export PASSWORD=123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP
+
+
 (3) X.509 인증 bypass 시키기
 
-	curl -u $USERNAME:$PASSWORD http://172.17.0.1:10001/api/v1/namespaces/whisk.system/pages
+	curl -u $USERNAME:$PASSWORD http://172.17.0.1:10001/api/v1/namespaces/whisk.system/packages
 
 (4) 예제
 
