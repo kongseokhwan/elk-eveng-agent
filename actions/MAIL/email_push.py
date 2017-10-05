@@ -6,7 +6,7 @@ from oslo_config import cfg
 
 CONFIG_FILE = 'etc/mail_action.conf'
 
-class stmp_agent():
+class smtp_agent():
     def __init__(self, SMTP_ADDRESS, SMTP_PORT,
                  ADMIN_ACCOUNT, ADMIN_PASSWORD):
         self.SMTP_ADDRESS = SMTP_ADDRESS
@@ -40,17 +40,18 @@ def main(argv):
         cfg.StrOpt('SMTP_ADMIN_ACCOUNT', default='alert@kulcloud.net',
                     help=('Define smtp alert sender mail address')),
         cfg.StrOpt('SMTP_ADMIN_PASSWORD', default='kulcloud',
-                    help=('Define smtp alert sender mail password'))
+                    help=('Define smtp alert sender mail password')),
         cfg.StrOpt('ADMIN_MAIL_ADDRESS', default='alert@kulcloud.net',
                     help=('Define smtp alert user mail address'))
     ]
     CONF = cfg.CONF
     CONF.register_group(opt_default_group)
     CONF.register_opts(default_opts, opt_default_group)
-    CONF(default_config_files=[CONFIG_FILE])
 
     user_mail = ''
-    message = ''
+    message = ''    
+
+
     try:
         opts, args = getopt.getopt(argv,"hu:m:",["user_mail=","msg="])
     except getopt.GetoptError:
@@ -68,9 +69,11 @@ def main(argv):
         # Regsiter Agent
         agent = smtp_agent(CONF.default.SMTP_ADDRESS,
                            CONF.default.SMTP_PORT,
-                           CONF.default.SMTP_ADMIN_SCCOUNT,
+                           CONF.default.SMTP_ADMIN_ACCOUNT,
                            CONF.default.SMTP_ADMIN_PASSWORD)
-        agent.action_send_mail(user_mail, message)
+        msg = 'Subject: {}\n\n{}'.format('NaaCS Error Notificatio', message)
+
+        agent.action_send_mail(user_mail, msg)
 
     except RuntimeError as e:
         LOG.error("%s SMTP Agent terminated!", e)
