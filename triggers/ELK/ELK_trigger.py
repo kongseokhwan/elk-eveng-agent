@@ -13,6 +13,7 @@ import triggers.common.Openwhisk.schema.EVENT_URL
 
 LOG = logging.getLogger(__name__)
 
+
 class ELK_event():
     def __init__(self, CONF):
         self.conf = CONF

@@ -29,8 +29,14 @@
 
 - API host (name or IP address) for the OpenWhisk deployment you want to use.
 
+	./bin/wsk property set --apihost 172.17.0.1
+
+
 - Authorization key (username and password) which grants you access to the OpenWhisk API.
 The API host can be acquired from the edge.host property in whisk.properties file, which is generated during deployment of OpenWhisk. Run the following command from your openwhisk directory to set the API host:
+
+	./bin/wsk property set --auth `cat ansible/files/auth.guest`
+
 
 #### 2. Use
 

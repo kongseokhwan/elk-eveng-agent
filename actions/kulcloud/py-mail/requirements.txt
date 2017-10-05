@@ -1,0 +1,5 @@
+smtplib
+getopt 
+oslo_log 
+oslo_config
+

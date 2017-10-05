@@ -190,10 +190,73 @@ RESULT CHECK
 
 #### (6) Action 생성
 
+###### (6-1) SLACK Notification action 생성
+
 	wsk action create slack --kind python:2 --main slack slack.zip	
 
 	wsk action invoke slack --blocking --result --param token "xoxb-172489925216-RKpT9uxHd3zaplQkIwdkn4YU" --param channel "#alert" --param message "ddos attack detection"
 
+**주의** SLACK Token 이 자꾸 바뀜. https://my.slack.com/services/new/bot 여기에서 TOKEN 확인 가능함. TOKEN 을 받아오는 Slack API 활용이 요구됨.
+
+
+###### (6-2) MAIL Notification action 생성
+
+	wsk action create mail --kind python:2 --main mail mail.zip	
+
+	wsk action invoke mail --blocking --result --param smtp_address "smtp.gmail.com" --param smtp_port "587" --param admin_account "alert@kulcloud.net" --param admin_password "kulcloud" --param message "ddos attack detection" --param user_mail "kongseokhwan@gmail.com"
+
+
+#### 7 Cloud Switch 관련 Policy 설정 예제
+
+####(1) DDoS Attach Policy
+
+**주의** Sequential 한 action 설정시, 처음 parameter 에 모든 action 에서 요구하는 정보들이 포함되어야 함
+
+	wsk trigger crate ddos_attack_trigger
+	
+	wsk action create ddos_attack_action --sequence mail,slack,elk
+
+	wsk rule create ddos_attack_rule ddos_attack_trigger ddos_attack_action
+
+	wsk trigger fire ddos_attack_trigger --param-file ddos_attack_params.json
+
+	wsk activation list --limit 1 ddos_attack_action 
+
+	wsk activation result {id}
+
+- DDoS Attach Triggering URL : ** http://$wsk_ip:10001/api/v1/namespace/_/triggers/ddos_attack_trigger
+
+####(2) Port Connection Change policy
+
+	wsk trigger crate port_status_trigger
+	
+	wsk action create port_status_action --sequence mail,slack,elk
+
+	wsk rule create port_status_rule port_status_trigger port_status_action
+
+	wsk trigger fire port_status_trigger --param-file port_status_params.json
+
+	wsk activation list --limit 1 port_status_action 
+
+	wsk activation result {id}
+
+- DDoS Attach Triggering URL : ** http://$wsk_ip:10001/api/v1/namespace/_/triggers/port_status_trigger
+
+####(3) IP Duplication policy
+
+	wsk trigger crate ip_dup_trigger
+	
+	wsk action create ip_dup_action --sequence mail,slack,elk
+
+	wsk rule create ip_dup_rule ip_dup_trigger ip_dup_action
+
+	wsk trigger fire ip_dup_trigger --param-file ip_dup_params.json
+
+	wsk activation list --limit 1 ip_dup_action 
+
+	wsk activation result {id}
+
+- DDoS Attach Triggering URL : ** http://$wsk_ip:10001/api/v1/namespace/_/triggers/ip_dup_trigger
 
 #### FAQs
 
