@@ -1,48 +1,68 @@
 import requests
 import json
-
-class beem_agent():
-    def __init__(self):        
-        this.headers = {'Content-type': 'application/json'}
-
-    
-    def beem_post(self, url, data):
-        data_json = json.dumps(data)
-        try:
-            response = requests.post(url, data=data_json, headers=this.headers)
-            return response.json()
-        except Exception:
-            return {'message': 'fail'}
-
-    def beem_acl(self):
-        # TODO
-    
-    def beem_reboot(self):
-        # TODO
-
+from requests.auth import HTTPBasicAuth
 
 def beem(params):
     """
-    @brief      { slack client module }
+    @brief      { acl api client module }
     
-    @param      params['action']                string: one of them (acl, reboot)
-    @param      params['device']                string: device ip
-    @param      params['acl_src_ip']            string: source ip
-    @param      params['acl_src_netmask']       string: source netmask
-    @param      params['acl_protocol']          string: protocol
-    @param      params['acl_dst_ip']            string: destination ip  
-    @param      params['acl_dst_netmask']       string: destination netmask 
+    @param      params['device_name']                string: one of them (acl, reboot)
+    @param      params['acl_number']                string: one of them (acl, reboot)
+    @param      params['match_order']                string: device ip
+    @param      params['src_host']            string: source ip
+    @param      params['src_wildcard']       string: source netmask
+    @param      params['protocol']          string: protocol
+    @param      params['dst_host']            string: destination ip  
+    @param      params['dst_wildcard']       string: destination netmask 
 
     
     @return     { "message": "string" }
     """
-    slack_token = params['token']
-    sc = SlackClient(slack_token)
-    sc.api_call(
-	    "chat.postMessage",
-	    #channel="#alert",
-	    channel=params['channel'],
-	    #text="Hello from Python! :tada:"
-	    text=params['message']
-    )
-    return {"message": params['message']}
+
+    controller = params['controller']
+    device_name = params['device_name']
+    acl_number = params['acl_number']
+    match_order = params['match_order']
+    src_host = params['src_host']
+    src_wildcard = params['src_wildcard']
+    protocol = params['protocol']
+    dst_host = params['dst_host']
+    dst_wildcard = params['dst_wildcard']     
+
+    body = {
+        "acl_number": acl_number,
+        "match_order": match_order,
+        "src_host": src_host,
+        "src_wildcard": src_wildcard,
+        "protocol": protocol,
+        "dst_host": dst_host,
+        "dst_wildcard": dst_wildcard
+    }
+
+    try:
+        r = requests.post("http://"+controller+"/1.0/"+device_name+"/qos/ipv4", 
+            data=json.dumps(body), auth=HTTPBasicAuth(USER, PW))
+    except
+        RuntimeError as e:
+        LOG.error("%s SMTP Agent terminated!", e)
+        return {
+            "acl_number": acl_number,
+            "match_order": match_order,
+            "src_host": src_host,
+            "src_wildcard": src_wildcard,
+            "protocol": protocol,
+            "dst_host": dst_host,
+            "dst_wildcard": dst_wildcard,
+            "message": "ACL Send Error"
+        }
+
+    return {
+            "acl_number": acl_number,
+            "match_order": match_order,
+            "src_host": src_host,
+            "src_wildcard": src_wildcard,
+            "protocol": protocol,
+            "dst_host": dst_host,
+            "dst_wildcard": dst_wildcard,
+            "message": "ACL Send Suceess"
+        }
