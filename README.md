@@ -211,6 +211,18 @@ RESULT CHECK
 
 	wsk action invoke slack --blocking --result --param token "xoxb-172489925216-UdxsbjxZzade8dePFQIdbTLB" --param channel "#alert" --param message "ddos attack detection"
 
+#### 7. NaaCS Test 시험 검증 스크립트
+
+	import sys
+	wsk -i action create DdosAttackActionList --sequence naacsmail,naacsslack
+
+	wsk -i rule create DdosAttackRule DdosAttackDetection DdosAttackActionList
+
+	wsk -i rule create SwitchErrorRule SwitchErrorDetection naacsmail
+
+	wsk -i trigger fire DdosAttackDetection --param user_mail " kongseokhwan@gmail.com" --param message "ddos attack detection" --param token "xoxb-172489925216-BNFydvGBHzqkzMsDfrGgvwiJ" --param channel "#alert"
+
+	wsk -i trigger fire SwitchErrorDetection --param user_mail " kongseokhwan@gmail.com" --param message "ddos attack detection" --param token "xoxb-172489925216-BNFydvGBHzqkzMsDfrGgvwiJ" --param channel "#alert"
 
 #### FAQs
 
