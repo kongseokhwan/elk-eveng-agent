@@ -12,4 +12,5 @@ def slack(params):
 	    #text="Hello from Python! :tada:"
 	    text=params['message']
     )
-    return {"message": params['message']}
+    #return {"message": params['message']}
+    return params

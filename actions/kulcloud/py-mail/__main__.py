@@ -70,4 +70,5 @@ def mail(params):
         LOG.error("%s SMTP Agent terminated!", e)
         return {"user_mail": user_mail, "message": "Mail Send Error"}
 
-    return { "message": msg, "user_mail": user_mail }
+    #return { "message": msg, "user_mail": user_mail }
+    return params
