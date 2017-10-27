@@ -68,7 +68,7 @@ def mail(params):
 
     except RuntimeError as e:
         LOG.error("%s SMTP Agent terminated!", e)
-        return {"user_mail": user_mail, "message": "Mail Send Error"}
+        return params
 
     #return { "message": msg, "user_mail": user_mail }
     return params
